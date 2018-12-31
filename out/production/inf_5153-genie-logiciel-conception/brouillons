@@ -1,0 +1,49 @@
+
+    int _columns, _rows, positionX, positionY;
+    Position<Integer, Integer> position;
+    Combattant combattant;
+    String stringDeco = "%%%%%%%%%%";
+    Matrice matrice;
+    MyDB mybase ;
+    int combattantId;
+    CreerCombattant creerCombattant;
+    int nombreCombattant;
+    int nombCombats;
+
+    public VS(int columns, int rows) {
+        this._columns = columns;
+        this._rows = rows;
+        mybase = new MyDB();
+        this.position = new Position<>(positionX, positionY);
+        this.matrice = new Matrice(columns,rows);
+        this.nombreCombattant=16;
+        this.nombCombats=0;
+        this.combattantId= 11111111;
+        this.creerCombattant= new CreerCombattant(combattantId);
+        initMatrice();
+
+    }
+
+
+    public void initMatrice() {
+        boolean combInit= false;
+        String comName=null;
+            int x = new Random().nextInt(_rows);
+            int y = new Random().nextInt(_columns);
+            combattant= mybase.getMaBase().get(0);
+            while (combInit==false&&nombCombats<nombreCombattant-1){
+            if (null == matrice.getMatrice()[y][x]); {
+                combattant.setPositionX(x);
+                combattant.setPositionY(y);
+                comName = combattant.getCombattantsType().name().toLowerCase();
+                switch (comName){
+                    case "rogue":  matrice.setMatrice(comName+"   ",y,x);
+                    case "fighter":  matrice.setMatrice(comName + " ",y,x);
+                    case "wizard":  matrice.setMatrice(comName + "   ",y,x);
+                }
+                nombCombats++;
+                combInit= true;
+        }
+            }
+        redimentionner();
+    }
